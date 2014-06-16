@@ -14,11 +14,13 @@ define [
       @canvas = @$el.find('.js-canvas')[0]
 
     appeared: ->
-      @game = new Game @canvas
+      window.setTimeout =>
+        @canvas.width = @canvas.clientWidth
+        @canvas.height = @canvas.clientHeight            
+        @game = new Game @canvas
 
-      window.addEventListener 'resize', => @game.resetDimensions()
-      window.setTimeout => 
-        @game.resetDimensions()
+        window.addEventListener 'resize', => @game.resetDimensions()
+
       , 500
 
 
