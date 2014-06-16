@@ -1,23 +1,14 @@
 define [
-  'components/transform'
-  'components/input'
-  'components/graphical'
+  'entities/base'
+
   'systems/canvas_draw'
   'systems/input'
   'systems/physics'
-], (Transform, Input, Graphical, CanvasDrawSystem, InputSystem, PhysicsSystem) ->
+], (Entity, CanvasDrawSystem, InputSystem, PhysicsSystem) ->
 
-  components = {
-    'transform': Transform
-    'input': Input
-    'graphical': Graphical
-  }
 
-  class Entity
-    constructor: (@id, componentList) ->
-      @id = undefined
-      @component = {}
-      @component[component] = new components[component] for component in componentList
+
+
 
   class Player extends Entity
     constructor: ->
@@ -25,7 +16,7 @@ define [
       @component.transform.x = Math.random() * 2000
       @component.transform.y = Math.random() * 800
       @component.transform.rotation = 0
-      @component.transform.scale = 1
+      @component.transform.scale = 2
       
 
       @component.graphical.frameNumber = 0
@@ -40,6 +31,8 @@ define [
       }
 
 
+
+
   class Game
     constructor: (@canvas) ->
       @entities = []
@@ -49,12 +42,13 @@ define [
       player.component.transform.x = @canvas.width/3
       player.component.transform.y = @canvas.height/3
       player.component.transform.rotation = 0
-      player.component.transform.scale = 1
+      player.component.transform.scale = 2
       
 
       player.component.graphical.frameNumber = 0
       player.component.graphical.maxFrames = 4
       player.component.graphical.textureName = 'walk'
+      player.component.graphical.frameTime = 50
 
       player.component.input.keys = {
         up: 69
@@ -62,6 +56,7 @@ define [
         left: 83
         right: 70
       }
+      player.component.input.playerControlled = true
       
       @entities.push player
 

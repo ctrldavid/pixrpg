@@ -43,35 +43,56 @@ define [
         ]
       }      
     
-    drawTexture: (texture, index, x, y, facing) ->
-      @context.save()
-      @context.translate x, y 
-      @context.rotate facing
-      @context.translate -x, -y
-      @context.drawImage( 
-        texture.image, 
-        texture.frames[index].x,
-        texture.frames[index].y,
-        texture.frames[index].w,
-        texture.frames[index].h,
-        x - texture.frames[index].cx,
-        y - texture.frames[index].cy,
-        texture.frames[index].w,
-        texture.frames[index].h
-      )     
-      @context.restore()
+      img = new Image
+      img.src = 'wave.png'
+      @textures.wave = {
+        image: img
+        facing: Math.PI/2        
+        frames: [
+          {x:1, y:1, cx:7.5, cy:3, w:16, h:5 }
+        ]
+      }         
+
+      @textures.wavestream = {
+        image: img
+        facing: Math.PI/2        
+        frames: [
+          {x:1, y:7, cx:1.5, cy:2, w:3, h:4 }
+          {x:5, y:7, cx:1.5, cy:2, w:3, h:4 }
+          {x:9, y:7, cx:1.5, cy:2, w:3, h:4 }
+          {x:13, y:7, cx:1.5, cy:2, w:3, h:4 }
+        ]
+      }         
+      @textures.wavespot = {
+        image: img
+        facing: Math.PI/2        
+        frames: [
+          {x:1, y:12, cx:1.5, cy:1.5, w:3, h:3 }
+          {x:5, y:12, cx:1.5, cy:1.5, w:3, h:3 }
+          {x:9, y:12, cx:1.5, cy:1.5, w:3, h:3 }
+          {x:13, y:12, cx:1.5, cy:1.5, w:3, h:3 }
+        ]
+      }         
+
 
     drawLoop: =>
-      @context.clearRect 0, 0, @canvas.width, @canvas.height
-
+      @context.clearRect 0, 0, @canvas.width, @canvas.height      
       time = new Date
 
       for entity in @entities
         continue unless entity.component.graphical?
+        
+        # if entity.component.timed
+        #   @context.globalAlpha = 1 - (time - entity.component.timed.birth) / entity.component.timed.ttl
+        # else
+        #   @context.globalAlpha = 1
+        
+
         texture = @textures[entity.component.graphical.textureName]
         index = entity.component.graphical.frameNumber
         x = entity.component.transform.x
         y = entity.component.transform.y
+        scale = entity.component.transform.scale
         rotation = entity.component.transform.rotation - texture.facing
         @context.save()
         @context.translate x, y 
@@ -83,10 +104,10 @@ define [
           texture.frames[index].y,
           texture.frames[index].w,
           texture.frames[index].h,
-          x - texture.frames[index].cx,
-          y - texture.frames[index].cy,
-          texture.frames[index].w,
-          texture.frames[index].h
+          x - texture.frames[index].cx*scale,
+          y - texture.frames[index].cy*scale,
+          texture.frames[index].w*scale,
+          texture.frames[index].h*scale
         )     
         @context.restore()
 

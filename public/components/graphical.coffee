@@ -8,6 +8,10 @@ define [
       @textureName = undefined
       @lastFrame = new Date
       @frameTime = 30
+      @frameLoop = true
 
     nextFrame: ->
-      @frameNumber = (@frameNumber + 1) % @maxFrames
+      if @frameLoop
+        @frameNumber = (@frameNumber + 1) % @maxFrames
+      else
+        @frameNumber = (@frameNumber + 1) unless @frameNumber == @maxFrames - 1
