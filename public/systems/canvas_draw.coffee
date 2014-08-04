@@ -15,10 +15,10 @@ define [
         image: img
         facing: Math.PI/2        
         frames: [
-          {x:1, y:1, cx:2.5, cy:1.5, w:6, h:4 }
-          {x:8, y:1, cx:2.5, cy:1.5, w:6, h:4 }
-          {x:15, y:1, cx:2.5, cy:1.5, w:6, h:4 }
-          {x:22, y:1, cx:2.5, cy:1.5, w:6, h:4 }
+          {x:1, y:1, cx:3, cy:2, w:6, h:4 }
+          {x:8, y:1, cx:3, cy:2, w:6, h:4 }
+          {x:15, y:1, cx:3, cy:2, w:6, h:4 }
+          {x:22, y:1, cx:3, cy:2, w:6, h:4 }
         ]
       }
 
@@ -72,14 +72,24 @@ define [
           {x:9, y:12, cx:1.5, cy:1.5, w:3, h:3 }
           {x:13, y:12, cx:1.5, cy:1.5, w:3, h:3 }
         ]
-      }         
+      }
+
+      img = new Image
+      img.src = 'bullet.png'
+      @textures.bullet = {
+        image: img
+        facing: Math.PI/2        
+        frames: [
+          {x:9, y:1, cx:1.5, cy:1.5, w:3, h:8 }
+        ]
+      }               
 
 
     drawLoop: =>
       @context.clearRect 0, 0, @canvas.width, @canvas.height      
       time = new Date
 
-      for entity in @entities
+      for entityID, entity of @entities.hashmap
         continue unless entity.component.graphical?
         
         # if entity.component.timed

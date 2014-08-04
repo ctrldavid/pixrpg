@@ -5,8 +5,8 @@ define [
     constructor: ->
       @x = undefined
       @y = undefined
-      @rotation = undefined
-      @scale = undefined
+      @rotation = 0
+      @scale = 1
       @velocity = 1
 
     facePoint: (x, y) ->

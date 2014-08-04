@@ -18,7 +18,7 @@ define [
         @canvas.width = @canvas.clientWidth
         @canvas.height = @canvas.clientHeight            
         @game = new Game @canvas
-
+        window.game = @game
         window.addEventListener 'resize', => @game.resetDimensions()
 
       , 500
