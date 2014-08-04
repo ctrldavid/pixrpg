@@ -32,6 +32,7 @@ class Transform extends Component
   constructor: ->
     @x = 0
     @y = 0
+    @rotation = 0
 
 class Entity
   constructor: ->
@@ -114,6 +115,7 @@ class Game
       continue unless @entities.map[entity.id]?     
       @entities.map[entity.id].components.transform.x = entity.component.transform.x
       @entities.map[entity.id].components.transform.y = entity.component.transform.y
+      @entities.map[entity.id].components.transform.rotation = entity.component.transform.rotation
 
 
 

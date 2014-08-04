@@ -14,6 +14,7 @@ define [
             continue if @entities.hashmap[entity.id].component.input?.playerControlled
             @entities.hashmap[entity.id].component.transform.x = entity.components.transform.x
             @entities.hashmap[entity.id].component.transform.y = entity.components.transform.y
+            @entities.hashmap[entity.id].component.transform.rotation = entity.components.transform.rotation
           #console.groupEnd()
 
         create: (data) ->
